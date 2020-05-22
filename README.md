@@ -1,8 +1,7 @@
-本身的目的是为了实现车道线检测网络，但进一步提升了其利用网络框架的能力。对其他的语义分割算法也进行了实现，本框架是对[该框架](https://github.com/yassouali/pytorch_segmentation#requirements)的扩展实现
-----
+本身的目的是为了实现车道线检测网络，但进一步提升了其利用网络框架的能力。对其他的语义分割算法也进行了实现，同时将网络更加的模块化，让人可以更加轻松的构建网络。本框架是基于[该框架](https://github.com/yassouali/pytorch_segmentation#requirements)的扩展实现。
 
 ## 框架介绍
-针对网络模型实现的具体实现，为了更好的实现利用网络，通过将网络结构分成backbone, modules, neck, decode_modules，通过这４大模块组合出一个完整model网络用以训练。从而实现可以更好的实现语义分割网络的整合复用,本框架目前还在开发中。
+针对网络模型实现的具体实现，为了更好的实现利用网络，通过将网络结构分成backbone, modules, neck, decode_modules，通过这４大模块组合出一个完整model网络用以训练，同时将损失函数，学习率策略，优化器也进行模块的设计实现，可以从train.py文件中看出简洁性。从而实现可以更好的实现语义分割网络的整合复用。最后本框架目前还在开发中。
 ## 内容列表
 - [模块介绍](#模块介绍)
 - [数据集](#数据集)
@@ -39,6 +38,7 @@
 - Psp
 - Convlstm
 - Assp
+- JUP
 
 ### 4. modules模块包括:
 
@@ -48,7 +48,9 @@
 
 ### 5. decode_modules模块:
  
-- up_basic (针对普通网络的Decode网络模块,该网络模块暂时没有形成较好的统一复用模块) 
+- UpConv2d (针对普通网络的Decode网络模块) 
+- UpConv2dWithCat (带有链接的Decode网络模块)
+- DenseUp
 
 ## 数据集
 
@@ -211,4 +213,4 @@ python3 detect.py -c config_file_path -w weight.pth -i image_path -s save_result
 ```
 
 ### 后记
-本框架是本人用于论文研究的基础实现，属于项目副本。不会优先更新这个该框架，但欢迎大家对bug进行指正。QQ:1145893246
+本框架是本人用于论文研究的基础实现，属于项目副本，可能无法实现完整功能。不会优先更新这个该框架，但欢迎大家对bug进行指正。QQ:1145893246

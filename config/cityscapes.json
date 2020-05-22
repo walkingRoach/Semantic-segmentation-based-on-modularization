@@ -39,7 +39,7 @@
     "mean": [0.28689529, 0.32513294, 0.28389176],
     "std": [0.17613647, 0.18099176, 0.17772235],
     "train_args": {
-      "data_dir": "/home/ouquanlin/datasets/cityscapes/",
+      "data_dir": "~/datasets/cityscapes/",
       "batch_size": 4,
       "base_size": 416,
       "crop_size": 384,
@@ -54,7 +54,7 @@
       "num_workers": 2
     },
     "val_args": {
-      "data_dir": "/home/ouquanlin/datasets/cityscapes/",
+      "data_dir": "~/datasets/cityscapes/",
       "augment": true,
       "batch_size": 4,
       "crop_size": 384,
@@ -65,8 +65,8 @@
 
   "train": {
     "epochs": 1000,
-    "writer_dir": "/home/ouquanlin/datasets/cityscapes/viewer/",
-    "save_dir": "/home/ouquanlin/datasets/cityscapes/checkpoint/",
+    "writer_dir": "~/datasets/cityscapes/viewer/",
+    "save_dir": "~/datasets/cityscapes/checkpoint/",
     "n_gpu": 1,
     "save_period": 20,
     "monitor": {

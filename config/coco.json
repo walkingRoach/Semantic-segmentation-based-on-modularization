@@ -2,7 +2,7 @@
   "dataset": {
     "name": "coco",
     "args": {
-      "data_dir": "/home/ouquanlin/datasets/coco",
+      "data_dir": "~/datasets/coco",
       "batch_size": 8,
       "base_size": 416,
       "crop_size": 380,

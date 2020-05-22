@@ -55,7 +55,7 @@
     },
     "have_val": true,
     "val_args": {
-      "data_dir": "/home/ouquanlin/datasets/VOCdevkit/VOC2007/",
+      "data_dir": "~/datasets/VOCdevkit/VOC2007/",
       "augment": true,
       "batch_size": 4,
       "crop_size": 384,
@@ -66,8 +66,8 @@
 
   "train": {
     "epochs": 1000,
-    "writer_dir": "/home/ouquanlin/datasets/VOCdevkit/VOC2007/viewer/",
-    "save_dir": "/home/ouquanlin/datasets/VOCdevkit/VOC2007/checkpoint/",
+    "writer_dir": "~/datasets/VOCdevkit/VOC2007/viewer/",
+    "save_dir": "~/datasets/VOCdevkit/VOC2007/checkpoint/",
     "n_gpu": 1,
     "save_period": 20,
     "monitor": {

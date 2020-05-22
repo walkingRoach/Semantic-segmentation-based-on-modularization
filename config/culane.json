@@ -39,7 +39,7 @@
     "mean": [0.3598, 0.3653, 0.3662],
     "std": [0.2573, 0.2663, 0.2756],
     "train_args": {
-      "data_dir": "/home/ouquanlin/datasets/CULane/",
+      "data_dir": "~/datasets/CULane/",
       "batch_size": 8,
       "base_size": 416,
       "crop_size": 384,
@@ -54,7 +54,7 @@
       "num_workers": 2
     },
     "val_args": {
-      "data_dir": "/home/ouquanlin/datasets/CULane/",
+      "data_dir": "~/datasets/CULane/",
       "augment": true,
       "batch_size": 4,
       "crop_size": 384,
@@ -65,8 +65,8 @@
 
   "train": {
     "epochs": 1000,
-    "writer_dir": "/home/ouquanlin/datasets/CULane/viewer/",
-    "save_dir": "/home/ouquanlin/datasets/CULane/checkpoint/",
+    "writer_dir": "~/datasets/CULane/viewer/",
+    "save_dir": "~/datasets/CULane/checkpoint/",
     "n_gpu": 1,
     "save_period": 20,
     "monitor": {
