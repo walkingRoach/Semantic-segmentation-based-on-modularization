@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="lane_segmentation">
+    <serverData>
+      <paths name="lane">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/oql/code/lane_segmentation" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="lane_segmentation">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/ubuntu/code/lane_segmentation" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

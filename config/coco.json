@@ -1,0 +1,19 @@
+{
+  "dataset": {
+    "name": "coco",
+    "args": {
+      "data_dir": "/home/ouquanlin/datasets/coco",
+      "batch_size": 8,
+      "base_size": 416,
+      "crop_size": 380,
+      "augment": true,
+      "crop": true,
+      "shuffle": true,
+      "flip": true,
+      "rotate": true,
+      "blur": false,
+      "split": "test",
+      "num_workers": 8
+    }
+  }
+}

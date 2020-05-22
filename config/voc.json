@@ -1,0 +1,88 @@
+ {
+  "name": "fcn",
+  "model": {
+    "name": "FCNs",
+    "args":{
+      "backbone": "vgg16_bn",
+      "freeze_bn": false,
+      "freeze_backbone": false,
+      "num_classes": 21
+    }
+  },
+
+  "optimizer": {
+    "name": "SGD",
+    "differential_lr": false,
+    "args": {
+      "lr": 0.01,
+      "weight_decay": 1e-4,
+      "momentum": 0.9
+    }
+  },
+
+  "lr_scheduler": {
+    "name": "Poly",
+    "args": {
+      "end_lr": null
+    }
+  },
+
+  "loss": {
+    "name": "CrossEntropyLoss2d",
+    "args": {
+      "ignore_index": 255
+    }
+  },
+
+  "dataset": {
+    "name": "VOC",
+    "mean": [0.45734706, 0.43338275, 0.40058118],
+    "std": [0.23965294, 0.23532275, 0.2398498],
+    "train_args": {
+      "data_dir": "/home/ouquanlin/datasets/VOCdevkit/VOC2007/",
+      "batch_size": 8,
+      "base_size": 416,
+      "crop_size": 384,
+      "augment": true,
+      "crop": true,
+      "scale": false,
+      "shuffle": true,
+      "flip": false,
+      "rotate": false,
+      "blur": false,
+      "split": "train",
+      "num_workers": 2
+    },
+    "have_val": true,
+    "val_args": {
+      "data_dir": "/home/ouquanlin/datasets/VOCdevkit/VOC2007/",
+      "augment": true,
+      "batch_size": 4,
+      "crop_size": 384,
+      "split": "val",
+      "num_workers": 4
+    }
+  },
+
+  "train": {
+    "epochs": 1000,
+    "writer_dir": "/home/ouquanlin/datasets/VOCdevkit/VOC2007/viewer/",
+    "save_dir": "/home/ouquanlin/datasets/VOCdevkit/VOC2007/checkpoint/",
+    "n_gpu": 1,
+    "save_period": 20,
+    "monitor": {
+      "is_monitor": true,
+      "type": "max",
+      "metric": "Mean_IoU",
+      "early_stop": 10
+    },
+    "tensorboard": true,
+    "log_dir": "./results/viewer",
+    "log_per_iter": 30
+  },
+
+  "val": {
+    "is_val": true,
+    "val_per_epochs": 5
+  }
+}

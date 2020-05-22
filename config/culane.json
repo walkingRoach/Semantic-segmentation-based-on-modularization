@@ -1,0 +1,87 @@
+ {
+  "name": "unet",
+  "model": {
+    "name": "unet",
+    "args":{
+      "backbone": "vgg16_bn",
+      "freeze_bn": false,
+      "freeze_backbone": false,
+      "num_classes": 21
+    }
+  },
+
+  "optimizer": {
+    "name": "SGD",
+    "differential_lr": false,
+    "args": {
+      "lr": 0.01,
+      "weight_decay": 1e-4,
+      "momentum": 0.9
+    }
+  },
+
+  "lr_scheduler": {
+    "name": "Poly",
+    "args": {
+      "end_lr": null
+    }
+  },
+
+  "loss": {
+    "name": "CrossEntropyLoss2d",
+    "args": {
+      "ignore_index": 255
+    }
+  },
+
+  "dataset": {
+    "name": "CULane",
+    "mean": [0.3598, 0.3653, 0.3662],
+    "std": [0.2573, 0.2663, 0.2756],
+    "train_args": {
+      "data_dir": "/home/ouquanlin/datasets/CULane/",
+      "batch_size": 8,
+      "base_size": 416,
+      "crop_size": 384,
+      "augment": false,
+      "crop": false,
+      "scale": false,
+      "shuffle": false,
+      "flip": false,
+      "rotate": false,
+      "blur": false,
+      "split": "train",
+      "num_workers": 2
+    },
+    "val_args": {
+      "data_dir": "/home/ouquanlin/datasets/CULane/",
+      "augment": true,
+      "batch_size": 4,
+      "crop_size": 384,
+      "split": "val",
+      "num_workers": 2
+    }
+  },
+
+  "train": {
+    "epochs": 1000,
+    "writer_dir": "/home/ouquanlin/datasets/CULane/viewer/",
+    "save_dir": "/home/ouquanlin/datasets/CULane/checkpoint/",
+    "n_gpu": 1,
+    "save_period": 20,
+    "monitor": {
+      "is_monitor": true,
+      "type": "max",
+      "metric": "Mean_IoU",
+      "early_stop": 10
+    },
+    "tensorboard": true,
+    "log_dir": "./results/viewer",
+    "log_per_iter": 30
+  },
+
+  "val": {
+    "is_val": true,
+    "val_per_epochs": 5
+  }
+}
