@@ -152,7 +152,7 @@ class UNet_ConvLSTM(BaseModel):
 
 # 这个网络只有244层, 并不是很难训练
 class SegNet_ConvLSTM(BaseModel):
-    def __init__(self, num_classes, pretrained=True, freeze_bn=False, freeze_backbone=False):
+    def __init__(self, num_classes, pretrained=False, freeze_bn=False, freeze_backbone=False):
         super(SegNet_ConvLSTM,self).__init__()
         vgg16_bn = models.vgg16_bn(pretrained=pretrained).features
         self.relu = nn.ReLU(inplace=True)
@@ -290,7 +290,7 @@ class SegNet_ConvLSTM(BaseModel):
         data = torch.cat(data, dim=0)
         lstm, _ = self.convlstm(data)
         test = lstm[0][-1,:,:,:,:]
-        up6 = self.index_UnPool(test,idx5)
+        up6 = self.index_UnPool(test, idx5)
         # up5 = self.index_UnPool(self.upconv5_block(up6), idx4)
         # up4 = self.index_UnPool(self.upconv4_block(up5), idx3)
         # up3 = self.index_UnPool(self.upconv3_block(up4), idx2)

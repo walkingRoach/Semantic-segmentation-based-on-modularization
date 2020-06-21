@@ -1,3 +1,4 @@
+import os
 import random
 import numpy as np
 import cv2
@@ -11,7 +12,7 @@ class BaseDataset(Dataset):
     def __init__(self, data_name, data_dir, split, mean, std, base_size=None, augment=True, val=False,
                  crop_size=416, crop=True, scale=True, flip=True, rotate=True, blur=False):
         self.data_name = data_name
-        self.root = data_dir
+        self.root = os.path.expanduser(data_dir)
         self.split = split
         self.mean = mean
         self.std = std
@@ -51,10 +52,10 @@ class BaseDataset(Dataset):
                 longside = random.randint(int(self.base_size * 0.5), int(self.base_size * 2.0))
             else:
                 longside = self.base_size
-            h, w = (longside, int(1.0 * longside * w / h + 0.5)) if h > w else (
-            int(1.0 * longside * h / w + 0.5), longside)
-            image = cv2.resize(image, (w, h), interpolation=cv2.INTER_LINEAR)
-            label = cv2.resize(label, (w, h), interpolation=cv2.INTER_NEAREST)
+            # h, w = (longside, int(1.0 * longside * w / h + 0.5)) if h > w else (
+            # int(1.0 * longside * h / w + 0.5), longside)
+            image = cv2.resize(image, (self.base_size[0], self.base_size[1]), interpolation=cv2.INTER_LINEAR)
+            label = cv2.resize(label, (self.base_size[0], self.base_size[1]), interpolation=cv2.INTER_NEAREST)
 
         while True:  # The rotated crop must have some objects
             image_new, label_new = image, label
@@ -126,7 +127,7 @@ class BaseDataset(Dataset):
         image = Image.fromarray(np.uint8(image))
 
         sample = {
-            'img': self.normalize(self.to_tensor(image)),
+            'img': self.normalize(self.to_tensor(image)),  # normalization
             'label': label,
             'img_name': image_name
         }

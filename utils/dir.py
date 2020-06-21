@@ -2,10 +2,11 @@ import os
 
 
 def check_dir(path):
-    if not os.path.exists(path):
-        os.makedirs(path)
+    if not os.path.exists(os.path.expanduser(path)):
+        os.makedirs(os.path.expanduser(path))
 
-    if not os.path.exists(path):
+    # print(os.path.expanduser(path))
+    if not os.path.exists(os.path.expanduser(path)):
         raise print("{} can't mkdir".format(path))
 
 

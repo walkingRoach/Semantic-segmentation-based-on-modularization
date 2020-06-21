@@ -1,19 +1,31 @@
 {
   "dataset": {
     "name": "coco",
-    "args": {
-      "data_dir": "~/datasets/coco",
+    "mean": [0.3610, 0.3939, 0.4042],
+    "std": [0.1883, 0.2078, 0.2319],
+    "train_args": {
+      "data_dir": "/home/ouquanlin/datasets/coco",
       "batch_size": 8,
-      "base_size": 416,
-      "crop_size": 380,
-      "augment": true,
-      "crop": true,
+      "base_size": [320, 180],
+      "crop_size": 180,
+      "augment": false,
+      "crop": false,
+      "scale": false,
       "shuffle": true,
-      "flip": true,
-      "rotate": true,
+      "flip": false,
+      "rotate": false,
       "blur": false,
+      "split": "train",
+      "num_workers": 2
+    },
+    "have_val": true,
+    "val_args": {
+      "data_dir": "~/datasets/SeqLane/test_set/640p",
+      "augment": true,
+      "batch_size": 2,
+      "crop_size": [320, 180],
       "split": "test",
-      "num_workers": 8
+      "num_workers": 2
     }
   }
 }

@@ -11,7 +11,8 @@ def get_instance(module, base_name, args_name, config, *args):
 
 def main(config):
     train_loader = get_instance(datasets, 'dataset', 'train_args', config)
-
+    # mean, val = get_mean_std(train_loader)
+    # print('mean is {} val is {}'.format(mean, val))  # [0.0046, 0.1073, 0.1376] [0.7319, 0.7800, 0.8414]
     # val_loader = train_loader.get_val_loader()
     # val_loader = get_instance(datasets, 'val', config)
     # test one batch
@@ -48,5 +49,5 @@ def main(config):
 
 
 if __name__ == '__main__':
-    config = json.load(open("./config/seqlane.json"))
+    config = json.load(open("./config/lanenet.json"))
     main(config)

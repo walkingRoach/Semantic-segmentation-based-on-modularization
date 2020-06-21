@@ -50,6 +50,7 @@ class UpConv2d(nn.Module):
     def forward(self, x, target_size):
         if self.up_sample:
             x = self.up(x)
+            # print(target_size.size())
             # Padding in case the incomping volumes are of different sizes
             diffY = target_size.size()[2] - x.size()[2]
             diffX = target_size.size()[3] - x.size()[3]

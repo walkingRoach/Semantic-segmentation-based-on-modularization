@@ -50,11 +50,11 @@ def show_random_image(dataset, show_num=6, if_mask=True):
         label = label.data.cpu().numpy()
         # print(label)
         if if_mask:
-            # print(label.shape)
+            print(label.shape)
             label = colorize_mask(label, dataset.palette)
             # print(label)
         else:
-            # print(label.shape)
+            print(label.shape)
             label = Image.fromarray(np.uint8(label))
         image, label = image.convert('RGB'), label.convert('RGB')
         # print(np.array(label))
@@ -74,7 +74,7 @@ def show_batch_images(batch, mean=None, std=None, palette=None, if_mask=True):
     else:
         print('use mean')
         restore_transform = transforms.Compose([
-            DeNormalize(mean, std),
+            # DeNormalize(mean, std),
             transforms.ToPILImage()
         ])
     viz_transform = transforms.Compose([
@@ -147,17 +147,21 @@ def show_batch_image(batch, mean, std, palette):
 def get_mean_std(dataloader):
     mean = 0.
     std = 0.
+    print(len(dataloader.dataset))
     for sample in dataloader:
         images = sample['img']
-        print(sample['img_name'])
+        # print(sample['images_name'])
         batch_samples = images.size(0)
         # print(batch_samples)
-        images = images.view(batch_samples, images.size(1), -1)
-        mean += images.mean(2).sum(0)
-        std += images.std(2).sum(0)
+        # inputs = torch.unbind(images, dim=1)
+        # for images in inputs:
+        images = images.view(batch_samples, images.size(1), images.size(2), -1)
+        print(images.size())
+        mean += images.mean(3).sum(0)
+        std += images.std(3).sum(0)
 
-    mean /= len(dataloader.dataset)
-    std /= len(dataloader.dataset)
+    mean /= (len(dataloader.dataset))
+    std /= (len(dataloader.dataset))
 
     return mean, std
 
@@ -183,18 +187,24 @@ def get_val_image(val_visual, mean, std, palette):
     return val_img
 
 
-def show_detect_image(image, mask, palette):
+def show_detect_image(image, mask, label, palette):
     viz_transform = transforms.Compose([
-        transforms.Resize((384, 384)),
+        # transforms.Resize((384, 384)),
         transforms.ToTensor()])
 
     vis_img = []
     colorized_mask = colorize_mask(mask, palette)
     mask = colorized_mask.convert('RGB')
-    [img, mask] = [viz_transform(x) for x in [image, mask]]
-    vis_img.extend([img, mask])
+    label = label.data.cpu().numpy()
+    # label = Image.fromarray(np.uint8(label))
+    label = colorize_mask(label, palette)
+    label = viz_transform(label.convert('RGB'))
+    mask = viz_transform(mask)
+    # label = viz_transform(label)
+    # [img, mask] = [viz_transform(x) for x in [image, mask]]
+    vis_img.extend([image, mask, label])
     vis_img = torch.stack(vis_img, 0)
-    grid = torchvision.utils.make_grid(vis_img.cpu(), nrow=2, padding=5)
+    grid = torchvision.utils.make_grid(vis_img.cpu(), nrow=3, padding=5)
     plt.imshow(grid.permute(1, 2, 0))
     plt.show()
     return colorized_mask

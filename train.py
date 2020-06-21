@@ -32,6 +32,5 @@ def main(config, resume=False):
 
 
 if __name__ == '__main__':
-    config = json.load(open("./config/voc.json"))
+    config = json.load(open("./config/seqlane.json"))
     main(config)
-

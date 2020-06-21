@@ -9,14 +9,17 @@ import numpy as np
 class RobustDataset(BaseDataset):
     def __init__(self, **kwargs):
         self.num_classes = 2
-        self.sequence_num = 5
+        self.sequence_num = 4
         self.palette = palette.create_palette('lanesequence')
         super(RobustDataset, self).__init__(data_name='lanesequence', **kwargs)
 
     def _set_files(self):
         if self.split == 'val':
             self.split = 'test'
-
+        if self.split == 'test':
+            self.opp_split = 'train'
+        else:
+            self.opp_split = 'test'
         txt_path = os.path.join(self.root, self.split + ".txt")
         images_list, label_list = self._readTxt(txt_path)
 
@@ -64,8 +67,10 @@ class RobustDataset(BaseDataset):
                 if not lines:
                     break
                 item = lines.strip().split()
-                img_list.append([os.path.join(self.root, filename) for filename in item[:-1]])
-                label_list.append(os.path.join(os.path.join(self.root, item[-1])))
+                img_list.append(
+                    [filename.replace(self.opp_split, self.split).replace('ouquanlin', 'ubuntu') for filename in
+                     item[:-1]])
+                label_list.append(item[-1].replace(self.opp_split, self.split).replace('ouquanlin', 'ubuntu'))
         fs.close()
         # print(img_list)
         return img_list, label_list
@@ -100,8 +105,8 @@ class RobustLane(BaseDataLoader):
                  val=False, crop=True, shuffle=False, flip=False, rotate=False, blur=False, augment=False,
                  val_split=None):
 
-        self.MEAN = [0.3598, 0.3653, 0.3662]  # NONE
-        self.STD = [0.2573, 0.2663, 0.2756]  # NONE
+        self.MEAN = [0.3419, 0.3648, 0.3597] # NONE
+        self.STD = [0.1669, 0.1784, 0.1872]  # NONE
 
         if augment is True:
             augment = False

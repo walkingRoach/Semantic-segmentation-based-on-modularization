@@ -90,10 +90,9 @@ class Trainer(BaseTrainer):
             pixAcc, mIoU, _ = self._get_seg_metrics().values()
 
             # PRINT INFO
-            tbar.set_description('TRAIN ({}) | Loss: {} | Acc: {:.4f} mIoU: {:.4f} | B: {} D: {} |'.format(
+            tbar.set_description('TRAIN ({}) | Loss: {} | Acc: {:.4f} mIoU: {:.4f}'.format(
                 epoch, self.total_loss.average,
-                pixAcc, mIoU,
-                round(self.batch_time.average, 2), round(self.data_time.average, 2)))
+                pixAcc, mIoU))
 
         # METRICS TO TENSORBOARD
         seg_metrics = self._get_seg_metrics()

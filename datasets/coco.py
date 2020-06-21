@@ -12,7 +12,7 @@ class CocoStuff10K(BaseDataset):
     def __init__(self, **kwargs):
         self.num_classes = 182
         self.palette = palette.create_palette('coco')
-        super(CocoStuff10K, self).__init__(**kwargs)
+        super(CocoStuff10K, self).__init__(data_name='cocoStuff10k', **kwargs)
 
     def _set_files(self):
         self.root = pathlib.Path(self.root)
@@ -51,7 +51,7 @@ class CocoStandard(BaseDataset):
     def __init__(self, number_classes, **kwargs):
         self.number_classes = number_classes
         self.palette = palette.create_palette(name=None, cls_num=self.number_classes)
-        super(CocoStandard, self).__init__(**kwargs)
+        super(CocoStandard, self).__init__(data_name='coco', **kwargs)
 
     def _set_files(self):
         self.root = pathlib.Path(self.root)

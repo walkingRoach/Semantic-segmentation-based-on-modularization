@@ -1,7 +1,8 @@
-本身的目的是为了实现车道线检测网络，但进一步提升了其利用网络框架的能力。对其他的语义分割算法也进行了实现，同时将网络更加的模块化，让人可以更加轻松的构建网络。本框架是基于[该框架](https://github.com/yassouali/pytorch_segmentation#requirements)的扩展实现。
+本身的目的是为了实现车道线检测网络，但进一步提升了其利用网络框架的能力。对其他的语义分割算法也进行了实现，本框架是对[该框架](https://github.com/yassouali/pytorch_segmentation#requirements)的扩展实现
+
 
 ## 框架介绍
-针对网络模型实现的具体实现，为了更好的实现利用网络，通过将网络结构分成backbone, modules, neck, decode_modules，通过这４大模块组合出一个完整model网络用以训练，同时将损失函数，学习率策略，优化器也进行模块的设计实现，可以从train.py文件中看出简洁性。从而实现可以更好的实现语义分割网络的整合复用。最后本框架目前还在开发中。
+针对网络模型实现的具体实现，为了更好的实现利用网络，通过将网络结构分成backbone, modules, neck, decode_modules，通过这４大模块组合出一个完整model网络用以训练。从而实现可以更好的实现语义分割网络的整合复用,本框架目前还在开发中。
 ## 内容列表
 - [模块介绍](#模块介绍)
 - [数据集](#数据集)
@@ -38,7 +39,6 @@
 - Psp
 - Convlstm
 - Assp
-- JUP
 
 ### 4. modules模块包括:
 
@@ -48,13 +48,11 @@
 
 ### 5. decode_modules模块:
  
-- UpConv2d (针对普通网络的Decode网络模块) 
-- UpConv2dWithCat (带有链接的Decode网络模块)
-- DenseUp
+- up_basic (针对普通网络的Decode网络模块,该网络模块暂时没有形成较好的统一复用模块) 
 
 ## 数据集
 
-本框架对原框架有个更好的数据集扩展，支持常规的VOC, COCO, CityScapes, Tusimple, CULane。同时利用百度的图像扩展方案，对图像进行扩展，图像的扩展方案可以查看aug_core，支持翻转、旋转、尺寸大小，亮度、饱和度，模糊等应用，可以通过修改config文件进行配置。除了事先对图像进行处理，也可以在训练时对图像进行增强，具体修改config.json文件。除了使用百度的图像增强手段。以后还会添加dali对图像进行增强
+本框架对原框架有个更好的数据集扩展，支持常规的VOC, COCO, CityScapes, Tusimple, CULane。同时利用百度的图像扩展方案，对图像进行扩展，图像的扩展方案可以查看aug_core，支持翻转、旋转、尺寸大小，亮度、饱和度，模糊等应用，可以通过修改config文件进行配置。除了事先对图像进行处理，也可以在训练时对图像进行增强，具体修改config.json文件。除了使用百度的图像增强手段。以后还会添加dali对图像进行增强。
 
 ### 查看数据集数据
 ```bash
@@ -66,7 +64,7 @@ python3 test_datalaoder.py
 ```
 
 ## 安装 
-使用的基础环境为pytorch v1.1和python3.6，可以使用下列的指令安装依赖：
+使用的基础环境为pytorch v1.1和python3.6，可以使用下列的指令安装依赖:
 ```bash
 pip3 install -r requirements.text
 ``` 
@@ -145,9 +143,13 @@ sudo python3 setup.py install
     "have_val": true,
     "val_args": {
       "data_dir": "~/VOC/test_set/320p",
-      "augment": true,
-      "batch_size": 2,
-      "crop_size": [320, 180],
+      "augment": true,  // 具体含义参看config文件夹下的readme.md
+      "scale": false,
+      "rotate": false,
+      "flip": false,
+      "crop": false,
+      "blur": false,
+      "shuffle": true,
       "split": "test",
       "num_workers": 2
     }
@@ -178,7 +180,7 @@ sudo python3 setup.py install
 ```
  
 ### 测试 
-在训练前，可以测试model模型是否安全可行,同时获取模型的参数信息。当然还可以测试数据集，损失函数，学习率策略，输入下方指令测试：
+在训练前，可以测试model模型是否安全可行,同时获取模型的参数信息。当然还可以测试数据集，损失函数，学习率策略，输入下方指令测试:
 ```bash
 # 测试model
 python3 test_model.py
@@ -195,7 +197,8 @@ python3 test_datasets.py
 #　测试dataloder是否成功加载数据
 python3 test_dataloder.py
 ```
- 
+对于上文中提供的数据集，支持对类别与类别数量进行统计。通过调用print(dataset)函数,可以返回下列结果(voc数据集做例子):  
+![img](https://raw.githubusercontent.com/walkingRoach/lane_segmentation/master/data/Screenshot%20from%202020-06-11%2016-53-55.png?token=AMUCKMSPT2UX5A7NDZPBFBC64HZAK)
 ### 训练
 配置好文件后，修改train.py文件中json文件，输入下方指令便可训练:
 ```bash
@@ -208,9 +211,12 @@ python3 train.py
 # 评估整个数据集
 python3 eval.py -c config_file_path -w weight.pth
 
-# 前向推到单一图片
+# 指定单一图片
 python3 detect.py -c config_file_path -w weight.pth -i image_path -s save_result_img_path
+
+# 指定测试集中的实际效果
+python3 detect.py -c config_file_path -w weight.pth  # 自动加载训练集图像进行检测，并显示图像、预测图像和标签图像的对比
 ```
 
 ### 后记
-本框架是本人用于论文研究的基础实现，属于项目副本，可能无法实现完整功能。不会优先更新这个该框架，但欢迎大家对bug进行指正。QQ:1145893246
+本框架是本人用于论文研究的基础实现，属于项目副本。不会优先更新这个该框架，但欢迎大家对bug进行指正。QQ:1145893246

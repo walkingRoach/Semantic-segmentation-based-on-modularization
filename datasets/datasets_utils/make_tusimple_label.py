@@ -3,9 +3,9 @@ import json
 import numpy as np
 import os
 
-root = '/home/ouquanlin/datasets/tusimple/test_set/'
-file = open('/home/ouquanlin/datasets/tusimple/test_label.json', 'r')
-train_txt = "/home/ouquanlin/datasets/tusimple/test_set/train.txt"
+root = '/home/ouquanlin/datasets/tusimple/train_set/'
+file = open('/home/ouquanlin/datasets/tusimple/train_set/label_data_0601.json', 'r')
+train_txt = "/home/ouquanlin/datasets/tusimple/train_set/test.txt"
 fp = open(train_txt, 'a')
 
 image_num = 0
@@ -32,8 +32,8 @@ for line in file.readlines():
             #         cv2.line(instanceimage, (int(arr_width[j][i - 1]), int(arr_height[i - 1])),
             #                  (int(arr_width[j][i]), int(arr_height[i])), lane_hist, 10)
             # lane_hist += 1
-    string1 = root + "truth" + save_path + ".png"
-    fp.write(img_path + ' ' + string1)
+    string1 = "truth" + save_path + ".png"
+    fp.write(img_path.split(root)[-1] + ' ' + string1)
     fp.write('\n')
     print(string1)
     if not os.path.exists(os.path.dirname(string1)):

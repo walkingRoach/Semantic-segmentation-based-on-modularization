@@ -156,7 +156,7 @@ class EESPNet(nn.Module):
         :param s: factor that scales the number of output feature maps
         '''
         super().__init__()
-        reps = [0, 2, 3, 2]  # how many times EESP blocks should be repeated at each spatial level. [0, 3, 7, 3]
+        reps = [0, 3, 7, 3]  # how many times EESP blocks should be repeated at each spatial level. [0, 3, 7, 3]
         channels = 3
 
         r_lim = [13, 11, 9, 7, 5]  # receptive field at each spatial level

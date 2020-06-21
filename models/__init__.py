@@ -4,4 +4,4 @@ from .unet import UNet, UNetResnet
 from .duc_hdc import ResNetDUC, ResNetDUCHDC
 from .enet import ENet
 from .robustlane import UNet_ConvLSTM, SegNet_ConvLSTM
-from .seqlane import SeqLane
+from .lanenet import LaneNet

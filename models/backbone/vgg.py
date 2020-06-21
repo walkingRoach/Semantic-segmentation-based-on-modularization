@@ -40,7 +40,8 @@ class VGGNet(VGG):
         if not self.remove_fc:
             output = self.classifier(output)
 
-        return output
+        # print(output.keys())
+        return output['x5'], output
 
 
 ranges = {
