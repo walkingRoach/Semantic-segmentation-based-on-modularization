@@ -198,7 +198,7 @@ python3 test_datasets.py
 python3 test_dataloder.py
 ```
 对于上文中提供的数据集，支持对类别与类别数量进行统计。通过调用print(dataset)函数,可以返回下列结果(voc数据集做例子):  
-![img](https://raw.githubusercontent.com/walkingRoach/lane_segmentation/master/data/Screenshot%20from%202020-06-11%2016-53-55.png?token=AMUCKMSPT2UX5A7NDZPBFBC64HZAK)
+![img](https://raw.githubusercontent.com/walkingRoach/Semantic-segmentation-based-on-modularization/master/data/Screenshot%20from%202020-06-11%2016-53-55.png)
 ### 训练
 配置好文件后，修改train.py文件中json文件，输入下方指令便可训练:
 ```bash
