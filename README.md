@@ -217,6 +217,8 @@ python3 detect.py -c config_file_path -w weight.pth -i image_path -s save_result
 # 指定测试集中的实际效果
 python3 detect.py -c config_file_path -w weight.pth  # 自动加载训练集图像进行检测，并显示图像、预测图像和标签图像的对比
 ```
+例如调用本测试集的第三条语句可以得到如下图所示结果
+![img](https://raw.githubusercontent.com/walkingRoach/Semantic-segmentation-based-on-modularization/master/results/img/1.png)
 
 ### 后记
 本框架是本人用于论文研究的基础实现，属于项目副本。不会优先更新这个该框架，但欢迎大家对bug进行指正。QQ:1145893246

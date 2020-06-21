@@ -1,0 +1,97 @@
+ {
+  "name": "seqlane",
+  "model": {
+    "name": "SeqLane",
+    "args":{
+      "backbone": "mobilenet",
+      "freeze_bn": false,
+      "freeze_backbone": false,
+      "num_classes": 2,
+      "pretrained": false,
+      "input_size": "640p"
+    }
+  },
+
+  "optimizer": {
+    "name": "SGD",
+    "differential_lr": false,
+    "args": {
+      "lr": 0.01,
+      "weight_decay": 5e-4,
+      "momentum": 0.9
+    }
+  },
+
+  "lr_scheduler": {
+    "name": "Poly",
+    "args": {
+      "end_lr": null
+    }
+  },
+
+  "loss": {
+    "name": "CrossEntropyLoss2d",
+    "args": {
+      "weight": [0.02, 1.02]
+    }
+  },
+
+  "dataset": {
+    "name": "Tusimple",
+    "mean": [0.3610, 0.3939, 0.4042],
+    "std": [0.1883, 0.2078, 0.2319],
+    "train_args": {
+      "data_dir": "~/datasets/tusimple/train_set/",
+      "batch_size": 8,
+      "base_size": [320, 480],
+      "crop_size": 180,
+      "augment": true,
+      "crop": false,
+      "scale": false,
+      "shuffle": true,
+      "flip": false,
+      "rotate": false,
+      "blur": false,
+      "split": "train",
+      "num_workers": 2
+    },
+    "have_val": true,
+    "val_args": {
+      "data_dir": "~/datasets/tusimple/test_set/",
+      "batch_size": 2,
+      "base_size": [480, 320],
+      "crop_size": 384,
+      "augment": true,
+      "scale": false,
+      "rotate": false,
+      "flip": false,
+      "crop": false,
+      "blur": false,
+      "shuffle": true,
+      "split": "test",
+      "num_workers": 2
+    }
+  },
+
+  "train": {
+    "epochs": 400,
+    "writer_dir": "~/datasets/SeqLane/640/viewer/",
+    "save_dir": "~/datasets/SeqLane/640/checkpoint/",
+    "n_gpu": 1,
+    "save_period": 20,
+    "monitor": {
+      "is_monitor": true,
+      "type": "max",
+      "metric": "Mean_IoU",
+      "early_stop": 20
+    },
+    "tensorboard": true,
+    "log_dir": "./results/viewer",
+    "log_per_iter": 30
+  },
+
+  "val": {
+    "is_val": true,
+    "val_per_epochs": 5
+  }
+}
